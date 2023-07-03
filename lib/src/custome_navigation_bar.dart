@@ -50,7 +50,7 @@ class CustomNavigationBar extends StatefulWidget {
     this.opacity = 0.8,
   })  : assert(scaleFactor <= 0.5, 'Scale factor must smaller than 0.5'),
         assert(scaleFactor > 0, 'Scale factor must bigger than 0'),
-        assert(0 <= currentIndex && currentIndex < items.length),
+        assert(-1 <= currentIndex && currentIndex < items.length),
         super(key: key);
 
   ///
@@ -191,8 +191,10 @@ class _CustomNavigationBarState extends State<CustomNavigationBar>
     super.didUpdateWidget(oldWidget);
     if (widget.currentIndex != oldWidget.currentIndex) {
       _scaleController?.reverse();
-      _startAnimation(widget.currentIndex);
-      _startScale(widget.currentIndex);
+      if (widget.currentIndex != -1) {
+        _startAnimation(widget.currentIndex);
+        _startScale(widget.currentIndex);
+      }
     }
   }
 
